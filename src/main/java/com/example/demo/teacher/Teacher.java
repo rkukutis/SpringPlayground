@@ -1,5 +1,4 @@
-package teacher;
-
+package com.example.demo.teacher;
 
 
 import jakarta.persistence.Entity;

@@ -1,5 +1,4 @@
-package teacher;
-
+package com.example.demo.teacher;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
