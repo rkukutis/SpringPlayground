@@ -13,8 +13,12 @@ public class TeacherService {
 		this.teacherRepository = teacherRepository;
 	}
 
-	List<Teacher> getAllTeachers() {
+	public List<Teacher> getAllTeachers() {
 		return teacherRepository.findAll();
+	}
+
+	public void addTeacher(Teacher teacher){
+		teacherRepository.save(teacher);
 	}
 
 }
