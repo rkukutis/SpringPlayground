@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TeacherService {
-	private TeacherRepository teacherRepository;
+	private final TeacherRepository teacherRepository;
 
 	@Autowired
 	public TeacherService(TeacherRepository teacherRepository) {
@@ -15,6 +15,10 @@ public class TeacherService {
 
 	public List<Teacher> getAllTeachers() {
 		return teacherRepository.findAll();
+	}
+
+	public List<Teacher> getTeacher(String lastName) {
+		return teacherRepository.findTeacherByLastName(lastName);
 	}
 
 	public void addTeacher(Teacher teacher){

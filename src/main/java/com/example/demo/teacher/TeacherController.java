@@ -19,9 +19,14 @@ public class TeacherController {
 	}
 
 	@GetMapping
-    public List<Teacher> getStudents() {
+    public List<Teacher> getTeachers() {
         return teacherService.getAllTeachers();
     }
+
+	@GetMapping(path = "{lastName}")
+	public List<Teacher> getTeacherByLastName(@PathVariable("lastName")String lastName) {
+		return teacherService.getTeacher(lastName);
+	}
 
 	@PostMapping
 	@ResponseBody
