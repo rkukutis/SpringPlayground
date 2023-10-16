@@ -1,6 +1,10 @@
-package com.example.demo.teacher;
+package com.example.demo.controllers;
 import java.util.List;
 
+import com.example.demo.mappers.TeacherMapper;
+import com.example.demo.models.Teacher;
+import com.example.demo.services.TeacherService;
+import com.example.demo.dto.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

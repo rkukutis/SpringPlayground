@@ -1,6 +1,8 @@
-package com.example.demo.teacher;
+package com.example.demo.services;
 import java.util.List;
 
+import com.example.demo.models.Teacher;
+import com.example.demo.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

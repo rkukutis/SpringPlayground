@@ -1,5 +1,7 @@
-package com.example.demo.teacher;
+package com.example.demo.mappers;
 
+import com.example.demo.models.Teacher;
+import com.example.demo.dto.TeacherDto;
 import org.springframework.stereotype.Component;
 
 @Component
