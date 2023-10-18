@@ -27,8 +27,8 @@ public class UserConfig {
         return (args) -> {
 
             AuthUserDetails user2 = new AuthUserDetails();
-            user2.setUsername("rhoopoe");
-            user2.setPassword(passwordEncoder.encode("kukutis"));
+            user2.setUsername("rkukutis");
+            user2.setPassword(passwordEncoder.encode("rhoopoe"));
             user2.setEnabled(true);
             user2.setCredentialsNonExpired(true);
             user2.setAccountNonExpired(true);

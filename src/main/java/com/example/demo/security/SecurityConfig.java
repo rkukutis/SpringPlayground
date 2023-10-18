@@ -28,17 +28,10 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthLoggingFilter(), BasicAuthenticationFilter.class)
-                .authorizeRequests(c-> c.anyRequest().permitAll());
+                .authorizeHttpRequests(c-> c.anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
     }
-
-    @Bean
-    SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.httpBasic(Customizer.withDefaults());
-        http.authorizeHttpRequests(c->c.anyRequest().authenticated());
-        return http.build();
-    }
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(4);
@@ -52,8 +45,6 @@ public class SecurityConfig  {
         return daoAuthenticationProvider;
     }
 
-
-    // DOES NOT WORK WITHOUT WebSecurityConfigurerAdapter
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
@@ -62,13 +53,5 @@ public class SecurityConfig  {
         return authenticationManagerBuilder.build();
     }
 
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
-
-        return http.build();
-    }
 
 }
