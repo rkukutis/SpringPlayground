@@ -1,11 +1,13 @@
 package com.example.demo.controllers;
 import java.util.List;
 
+import com.example.demo.Exceptions.PaginationException;
 import com.example.demo.mappers.TeacherMapper;
 import com.example.demo.models.Teacher;
 import com.example.demo.services.TeacherService;
 import com.example.demo.dto.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +25,17 @@ public class TeacherController {
 	}
 
 	@GetMapping
-    public List<Teacher> getTeachers() {
-        return teacherService.getAllTeachers();
+    public Page<Teacher> getTeachers(@RequestParam(name = "page", required = false)Integer page,
+									 @RequestParam(name = "pageSize", required = false)Integer pageSize) {
+
+		if (page == null || pageSize == null) {
+			// defaults
+			return teacherService.getAllTeachers(1, 10);
+		}
+		if (page < 1 || pageSize < 1) {
+			throw new PaginationException("page and pageSize must be positive numbers");
+		}
+        return teacherService.getAllTeachers(page-1, pageSize);
     }
 
 	@GetMapping(path = "{lastName}")
