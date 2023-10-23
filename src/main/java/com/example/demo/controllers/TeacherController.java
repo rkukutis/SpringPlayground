@@ -30,7 +30,7 @@ public class TeacherController {
 
 		if (page == null || pageSize == null) {
 			// defaults
-			return teacherService.getAllTeachers(1, 10);
+			return teacherService.getAllTeachers(0, 10);
 		}
 		if (page < 1 || pageSize < 1) {
 			throw new PaginationException("page and pageSize must be positive numbers");
