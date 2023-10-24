@@ -26,6 +26,15 @@ public class UserConfig {
      public CommandLineRunner addMockUsers() {
         return (args) -> {
 
+            AuthUserDetails admin = new AuthUserDetails();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("rhoopoe"));
+            admin.setEnabled(true);
+            admin.setCredentialsNonExpired(true);
+            admin.setAccountNonExpired(true);
+            admin.setAccountNonLocked(true);
+
+
             AuthUserDetails user2 = new AuthUserDetails();
             user2.setUsername("rkukutis");
             user2.setPassword(passwordEncoder.encode("rhoopoe"));
@@ -35,11 +44,19 @@ public class UserConfig {
             user2.setAccountNonLocked(true);
 
             AuthGrantedAuthority grantedAuthority = new AuthGrantedAuthority();
+            AuthGrantedAuthority grantedAuthority1 = new AuthGrantedAuthority();
+
             grantedAuthority.setAuthority("USER");
             grantedAuthority.setAuthUserDetails(user2);
+            grantedAuthority1.setAuthority("ADMIN");
+            grantedAuthority1.setAuthUserDetails(admin);
+
             authUserDetailsRepository.save(user2);
+            authUserDetailsRepository.save(admin);
             authGrantedAuthorityRepository.save(grantedAuthority);
+            authGrantedAuthorityRepository.save(grantedAuthority1);
             user2.setAuthorities(Collections.singleton(grantedAuthority));
+            admin.setAuthorities(Collections.singleton(grantedAuthority1));
         };
     }
 
