@@ -7,14 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  {
@@ -34,12 +33,13 @@ public class SecurityConfig  {
         // but anyone that is authenticated can access (GET) the students.
         // Other student operations reserved for admin
         httpSecurity.authorizeHttpRequests(c-> c.requestMatchers("api/v1/teacher").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.PATCH, "api/v1/student").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "api/v1/student").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "api/v1/student").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "api/v1/student").authenticated()
-                )
-                .httpBasic(c -> c.authenticationEntryPoint(new AuthEntryPoint()));
+                .requestMatchers(HttpMethod.PATCH, "api/v1/student").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "api/v1/student").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "api/v1/student").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "api/v1/student").authenticated()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+                .permitAll()
+        ).httpBasic(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
@@ -63,6 +63,5 @@ public class SecurityConfig  {
         authenticationManagerBuilder.authenticationProvider(jpaDaoAuthenticationProvider());
         return authenticationManagerBuilder.build();
     }
-
 
 }
